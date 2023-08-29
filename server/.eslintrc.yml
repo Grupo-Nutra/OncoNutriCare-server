@@ -5,6 +5,7 @@ env:
 extends: eslint:recommended
 parserOptions:
   ecmaVersion: latest
+ignorePatterns: [ "test/" ]
 rules: {
   #no-undef: off
 }

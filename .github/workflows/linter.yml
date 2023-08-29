@@ -23,5 +23,5 @@ jobs:
         node-version: 18
     - name: Instaling Dependencies
       run: npm install
-    - name: Running Tests
+    - name: Running Linter
       run: npx eslint .

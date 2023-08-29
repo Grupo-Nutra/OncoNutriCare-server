@@ -10,6 +10,9 @@ jobs:
   unit-tests:
 
     runs-on: ubuntu-latest
+    default:
+      run:
+        working-directory: ./server
 
     steps:
     - name: Checkout
@@ -19,8 +22,6 @@ jobs:
       with:
         node-version: 18
     - name: Instaling Dependencies
-      run: |
-        cd server
-        npm install
+      run: npm install
     - name: Running Tests
       run: npm test

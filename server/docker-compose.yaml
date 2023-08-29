@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  server:
+    container_name: server
+    image: server:1.0
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/postgres
+    depends_on:
+      - pg_database
+      - pg_admin
+
+  pg_database:
+    container_name: pg_database
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+
+  pg_admin:
+    container_name: pg_admin
+    image: dpage/pgadmin4
+    ports:
+      - '7878:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@nutra.com
+      - PGADMIN_DEFAULT_PASSWORD=nutrapgadmin
+  
+volumes:
+  pg_data:
+    driver: local

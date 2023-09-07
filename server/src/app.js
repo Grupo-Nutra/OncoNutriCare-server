@@ -5,6 +5,8 @@ const cors = require('cors');
 const log = require('./util/logger');
 const db = require('./util/db');
 const patientRoutes = require('./routes/patients');
+const nutritionistRoutes = require('./routes/nutritionists');
+const appointmentRoutes = require('./routes/appointments');
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.use(cors({
 
 // routes
 app.use(patientRoutes);
+app.use(nutritionistRoutes);
+app.use(appointmentRoutes);
 
 // sync database and start server
 db.sync()

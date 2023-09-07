@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../util/db');
+const Paciente = require('./patients');
 
 const Nutricionista = db.define('Nutricionista', {
     idNutricionista: {
@@ -34,5 +35,8 @@ const Nutricionista = db.define('Nutricionista', {
             }
         ]
 });
+
+// estabelecendo relacionamentos
+Nutricionista.hasMany(Paciente, { foreignKey: 'idNutricionista', onDelete: 'CASCADE' });
 
 module.exports = Nutricionista;

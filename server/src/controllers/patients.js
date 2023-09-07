@@ -1,36 +1,7 @@
 const log = require('../util/logger');
 const Paciente = require('../models/patient');
 
-// read all
-exports.getPatients = async (_, res) => {
-    try {
-        const patients = await Paciente.findAll();
-        res.status(200).json({ patients: patients });
-        log.info('Consulta bem-sucedida: Lista de pacientes recuperada.');
-    } catch (err) {
-        log.error('Erro ao buscar pacientes:', err);
-        res.status(500).json({ message: 'Erro ao buscar pacientes.' });
-    }
-}
-
-// read
-exports.getPatient = async (req, res) => {
-    const patientId = req.params.patientId;
-
-    try {
-        const patient = await Paciente.findByPk(patientId);
-        if (!patient) {
-            return res.status(404).json({ message: 'Paciente não encontrado.' });
-        }
-        res.status(200).json({ patient: patient });
-        log.info('Paciente encontrado.', patient.idPaciente);
-    } catch (err) {
-        log.error(err); // Usando o logger para registrar o erro
-        res.status(500).json({ message: 'Erro ao buscar paciente.' });
-    }
-}
-
-// create
+//create
 exports.createPatient = async (req, res) => {
     const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco } = req.body;
 
@@ -52,7 +23,45 @@ exports.createPatient = async (req, res) => {
     }
 }
 
-// update
+//read
+exports.getPatient = async (req, res) => {
+    const patientId = req.params.patientId;
+
+    try {
+        const patient = await Paciente.findByPk(patientId);
+        if (!patient) {
+            return res.status(404).json({ message: 'Paciente não encontrado.' });
+        }
+        res.status(200).json({ patient: patient });
+        log.info('Paciente encontrado.', patient.idPaciente);
+    } catch (err) {
+        log.error(err); // Usando o logger para registrar o erro
+        res.status(500).json({ message: 'Erro ao buscar paciente.' });
+    }
+}
+
+//read all
+exports.getPatientsbyNutritionist = async (req, res) => {
+    const nutritionistId = req.params.nutritionistId;
+
+    try {
+        const patients = await Paciente.findAll({
+            where: { idNutricionista: nutritionistId },
+        });
+
+        if (!patients) {
+            return res.status(404).json({ message: 'Nenhum paciente encontrado para este nutricionista.' });
+        }
+
+        log.info('Pacientes encontrados para o nutricionista:', patients);
+        res.status(200).json({ patients });
+    } catch (err) {
+        log.error('Erro ao buscar pacientes do nutricionista:', err);
+        res.status(500).json({ message: 'Erro ao buscar pacientes do nutricionista.' });
+    }
+}
+
+//update
 exports.updatePatient = async (req, res) => {
     const patientId = req.params.patientId;
     const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco } = req.body;
@@ -79,7 +88,7 @@ exports.updatePatient = async (req, res) => {
     }
 }
 
-// delete
+//delete
 exports.deletePatient = async (req, res) => {
     const patientId = req.params.patientId;
 

@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../util/db');
+const Nutricionista = require('./nutritionist');
+const Consulta = require('./appointment');
 
 const Paciente = db.define('Paciente', {
     idPaciente: {
@@ -34,6 +36,19 @@ const Paciente = db.define('Paciente', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    idNutricionista: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Nutricionista',
+            key: 'idNutricionista',
+        }
+    },
 });
+
+// estabelecendo relacionamentos
+Paciente.belongsTo(Nutricionista, { foreignKey: 'idNutricionista' });
+Paciente.hasMany(Consulta, { foreignKey: 'idPaciente', onDelete: 'CASCADE' });
+
     
 module.exports = Paciente;

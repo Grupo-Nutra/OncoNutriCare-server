@@ -1,4 +1,4 @@
-const controller = require('../controllers/nutritionists');
+const controller = require('../controllers/nutritionistsController');
 const router = require('express').Router();
 
 router.get('/nutritionists/:nutritionistId', controller.getNutritionist);

@@ -1,4 +1,4 @@
-const controller = require('../controllers/appointments');
+const controller = require('../controllers/appointmentsController');
 const router = require('express').Router();
 
 router.post('/appointments', controller.createAppointment);

@@ -1,4 +1,4 @@
-const controller = require('../controllers/patients');
+const controller = require('../controllers/patientsController');
 const router = require('express').Router();
 
 router.post('/patients', controller.createPatient);

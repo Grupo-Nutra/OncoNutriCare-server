@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../util/db');
-const Paciente = require('./patients');
+const Paciente = require('./patient');
 
 const Nutricionista = db.define('Nutricionista', {
     idNutricionista: {

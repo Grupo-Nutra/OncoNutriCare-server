@@ -1,5 +1,4 @@
 const express = require('express');
-require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const log = require('./util/logger');
@@ -7,6 +6,8 @@ const db = require('./util/db');
 const patientRoutes = require('./routes/patients');
 const nutritionistRoutes = require('./routes/nutritionists');
 const appointmentRoutes = require('./routes/appointments');
+
+require('dotenv').config();
 
 const app = express();
 

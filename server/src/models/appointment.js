@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../util/db');
-const Paciente = require('./patients');
+const Paciente = require('./patient');
 
 const Consulta = db.define('Consulta', {
     idConsulta: {
@@ -37,20 +37,20 @@ const Consulta = db.define('Consulta', {
     planoTeraoeutico: {
         type: Sequelize.STRING(350),
     }, 
-    Tratamento: {
+    tratamento: {
         type: Sequelize.STRING,
-    },
-    idPaciente: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Paciente',
-            key: 'idPaciente',
-        }
     },
 });
 
 // estabelecendo relacionamento
-Consulta.belogsTo(Paciente, { foreignKey: 'idPaciente' });
+Consulta.belongsTo(Paciente, { 
+    constraint: true, 
+    foreignKey: 'idPaciente',
+    onDelete: 'CASCADE' 
+});
+
+Paciente.hasMany(Consulta, { 
+    foreignKey: 'idPaciente' 
+});
 
 module.exports = Consulta;

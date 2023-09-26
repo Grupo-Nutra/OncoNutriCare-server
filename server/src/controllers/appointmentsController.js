@@ -1,4 +1,4 @@
-const Consulta = require('../models/consulta');
+const Consulta = require('../models/appointment');
 const log = require('../util/logger');
 
 //create
@@ -94,7 +94,7 @@ exports.updateAppointment = async (req, res) => {
 }
 
 //delete
-exports.deleteAppointments = async (req, res) => {
+exports.deleteAppointment = async (req, res) => {
     const consultaId = req.params.consultaId;
 
     try {

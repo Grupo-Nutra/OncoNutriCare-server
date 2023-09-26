@@ -1,11 +1,9 @@
 const Sequelize = require('sequelize');
 const db = require('../util/db');
-const Paciente = require('./patient');
 
 const Nutricionista = db.define('Nutricionista', {
     idNutricionista: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true
     },
@@ -14,7 +12,7 @@ const Nutricionista = db.define('Nutricionista', {
         allowNull: false,
     },
     crnNumero: {
-        type: Sequelize.INTEGER(6),
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     nomeCompleto: {
@@ -26,7 +24,13 @@ const Nutricionista = db.define('Nutricionista', {
     },
     email: {
         type: Sequelize.STRING,
-    }, 
+    },
+    createdAt: {
+        type: Sequelize.DATE
+    },
+      updatedAt: {
+        type: Sequelize.DATE
+    },
 },  {
         indexes: [
             {
@@ -35,8 +39,5 @@ const Nutricionista = db.define('Nutricionista', {
             }
         ]
 });
-
-// estabelecendo relacionamentos
-Nutricionista.hasMany(Paciente, { foreignKey: 'idNutricionista', onDelete: 'CASCADE' });
 
 module.exports = Nutricionista;

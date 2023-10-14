@@ -11,10 +11,10 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/postgres
+      - DATABASE_URL=postgresql://postgres:password@pg_database:5432/database
     depends_on:
-      - pg_database
-      - pg_admin
+      pg_database:
+        condition: service_healthy
 
   pg_database:
     container_name: pg_database
@@ -27,15 +27,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=database
-
-  pg_admin:
-    container_name: pg_admin
-    image: dpage/pgadmin4
-    ports:
-      - '7878:80'
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@nutra.com
-      - PGADMIN_DEFAULT_PASSWORD=nutrapgadmin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
   
 volumes:
   pg_data:

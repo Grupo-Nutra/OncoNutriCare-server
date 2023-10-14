@@ -3,7 +3,7 @@ const Paciente = require('../models/patient');
 
 //create
 exports.createPatient = async (req, res) => {
-    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco } = req.body;
+    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco, idNutricionista } = req.body;
 
     try {
         const patient = await Paciente.create({
@@ -13,7 +13,8 @@ exports.createPatient = async (req, res) => {
             sexo: sexo,
             telefone: telefone,
             email: email,
-            diagnosticoOnco: diagnosticoOnco
+            diagnosticoOnco: diagnosticoOnco,
+            idNutricionista: idNutricionista
         });
         res.status(201).json({ message: 'Paciente criado com sucesso.', patient: patient });
         log.info('Paciente criado com sucesso:', patient.idPaciente);

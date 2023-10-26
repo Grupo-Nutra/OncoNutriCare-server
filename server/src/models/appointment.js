@@ -13,15 +13,11 @@ const Consulta = db.define('Consulta', {
         type: Sequelize.DATE,
         allowNull: false,
     },
-    hora: {
-        type: Sequelize.TIME,
-        allowNull: false,
-    },
     peso: {
         type: Sequelize.DECIMAL(5,2),
         allowNull: false,
     },
-    diagonosticoNutri: {
+    diagnosticoNutri: {
         type: Sequelize.ENUM('Baixo peso', 'Desnutrição', 'Caquexia', 'Miopenia', 'Sarcopenia', 'Sobrepeso', 'Obesidade'),
         allowNull: false,
     },
@@ -34,7 +30,7 @@ const Consulta = db.define('Consulta', {
     statusTno: {
         type: Sequelize.ENUM('Sim', 'Não'),
     },
-    planoTeraoeutico: {
+    planoTerapeutico: {
         type: Sequelize.STRING(350),
     }, 
     tratamento: {

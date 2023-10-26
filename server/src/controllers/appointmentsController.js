@@ -3,12 +3,12 @@ const log = require('../util/logger');
 
 //create
 exports.createAppointment = async (req, res) => {
-    const { data, hora, peso, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, tratamento } = req.body;
+    const { idPaciente, data, peso, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, tratamento } = req.body;
 
     try {
         const appointment = await Consulta.create({
+            idPaciente: idPaciente,
             data: data,
-            hora: hora,
             peso: peso,
             diagnosticoNutri: diagnosticoNutri,
             inapetencia: inapetencia,

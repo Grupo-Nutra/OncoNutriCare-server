@@ -21,7 +21,7 @@ const Paciente = db.define('Paciente', {
         type: Sequelize.STRING,
     },
     sexo: {
-        type: Sequelize.ENUM('M', 'F', 'Prefere não declarar'),
+        type: Sequelize.ENUM('M', 'F'),
         allowNull: false,
     },
     telefone: {

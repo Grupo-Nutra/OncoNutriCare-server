@@ -19,10 +19,9 @@ const Paciente = db.define('Paciente', {
     },
     numeroProntuario: {
         type: Sequelize.STRING,
-        unique: true,
     },
     sexo: {
-        type: Sequelize.ENUM('M', 'F'),
+        type: Sequelize.ENUM('M', 'F', 'Prefere não declarar'),
         allowNull: false,
     },
     telefone: {

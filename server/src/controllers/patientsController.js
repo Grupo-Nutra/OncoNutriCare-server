@@ -16,8 +16,7 @@ exports.createPatient = async (req, res) => {
             diagnosticoOnco: diagnosticoOnco,
             idNutricionista: idNutricionista
         });
-        res.status(201).json({ message: 'Paciente criado com sucesso.', patient: patient });
-        log.info('Paciente criado com sucesso:', patient.idPaciente);
+        res.status(201).json(patient);
     } catch (err) {
         log.error('Erro ao criar paciente:', err);
         res.status(500).json({ message: 'Erro ao criar paciente.' });
@@ -33,8 +32,7 @@ exports.getPatient = async (req, res) => {
         if (!patient) {
             return res.status(404).json({ message: 'Paciente não encontrado.' });
         }
-        res.status(200).json({ patient: patient });
-        log.info('Paciente encontrado.', patient.idPaciente);
+        res.status(200).json(patient);
     } catch (err) {
         log.error(err); // Usando o logger para registrar o erro
         res.status(500).json({ message: 'Erro ao buscar paciente.' });
@@ -54,8 +52,7 @@ exports.getPatientsbyNutritionist = async (req, res) => {
             return res.status(404).json({ message: 'Nenhum paciente encontrado para este nutricionista.' });
         }
 
-        log.info('Pacientes encontrados para o nutricionista:', patients);
-        res.status(200).json({ patients });
+        res.status(200).json(patients);
     } catch (err) {
         log.error('Erro ao buscar pacientes do nutricionista:', err);
         res.status(500).json({ message: 'Erro ao buscar pacientes do nutricionista.' });
@@ -81,8 +78,7 @@ exports.updatePatient = async (req, res) => {
         patient.diagnosticoOnco = diagnosticoOnco;
 
         const updatedPatient = await patient.save();
-        res.status(200).json({ message: 'Paciente atualizado com sucesso.', patient: updatedPatient });
-        log.info('Paciente atualizado com sucesso:', updatedPatient.idPaciente);
+        res.status(200).json(updatedPatient);
     } catch (err) {
         log.error('Erro ao atualizar paciente:', err);
         res.status(500).json({ message: 'Erro ao atualizar paciente.' });
@@ -100,7 +96,6 @@ exports.deletePatient = async (req, res) => {
         }
         await patient.destroy();
         res.status(200).json({ message: 'Paciente removido com sucesso.' });
-        log.info('Paciente removido com sucesso:', patientId);
     } catch (err) {
         log.error('Erro ao remover paciente:', err);
         res.status(500).json({ message: 'Erro ao remover paciente.' });

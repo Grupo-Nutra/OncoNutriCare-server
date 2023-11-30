@@ -38,7 +38,7 @@ const Consulta = db.define('Consulta', {
         allowNull: false,
     },
     diagnosticoNutri: {
-        type: Sequelize.ENUM('Baixo peso', 'Desnutrição', 'Caquexia', 'Miopenia', 'Sarcopenia', 'Sobrepeso', 'Obesidade'),
+        type: Sequelize.ENUM('Baixo peso', 'Desnutrição', 'Caquexia', 'Miopenia', 'Sarcopenia', 'Sobrepeso', 'Obesidade', 'Obesidade Sarcopênica'),
         allowNull: false,
     },
     inapetencia: {
@@ -65,6 +65,9 @@ const Consulta = db.define('Consulta', {
         type: Sequelize.ENUM('Sim', 'Não'),
         allowNull: false,
     },
+    nivelRisco: {
+        type: Sequelize.ENUM('Baixo', 'Moderado', 'Alto'),
+    },
     statusTno: {
         type: Sequelize.ENUM('Sim', 'Não'),
         allowNull: false,
@@ -72,16 +75,14 @@ const Consulta = db.define('Consulta', {
     adesaoTno: {
         type: Sequelize.ENUM('0%', '25%', '50%', '75%', '100%'),
     },
-    //ideal? '0 a 20%', '21 a 40%', '41 a 60%', '61 a 80%', '81 a 90%', '91 a 100%'
-    //ideal?? 'Muito Baixa', 'Baixa', 'Moderada', 'Alta', 'Muito Alta'
     aceitacaoAlimentar: {
         type: Sequelize.ENUM('0 a 20%', '40%', '60%', '80%', '90 a 100%'),
     },
     planoTerapeutico: {
-        type: Sequelize.STRING(350),
-    }, 
-    tratamento: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
+    },
+    conduta: {
+        type: Sequelize.STRING(500),
     },
 });
 

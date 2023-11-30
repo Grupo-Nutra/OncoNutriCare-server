@@ -3,7 +3,7 @@ const Paciente = require('../models/patient');
 
 //create
 exports.createPatient = async (req, res) => {
-    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco, idNutricionista } = req.body;
+    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco, idNutricionista, alergias, comorbidades } = req.body;
 
     try {
         const patient = await Paciente.create({
@@ -14,8 +14,11 @@ exports.createPatient = async (req, res) => {
             telefone: telefone,
             email: email,
             diagnosticoOnco: diagnosticoOnco,
-            idNutricionista: idNutricionista
+            idNutricionista: idNutricionista,
+            comorbidades: [comorbidades],
+            alergias: [alergias]
         });
+
         res.status(201).json(patient);
     } catch (err) {
         log.error('Erro ao criar paciente:', err);
@@ -29,9 +32,11 @@ exports.getPatient = async (req, res) => {
 
     try {
         const patient = await Paciente.findByPk(patientId);
+
         if (!patient) {
             return res.status(404).json({ message: 'Paciente não encontrado.' });
         }
+
         res.status(200).json(patient);
     } catch (err) {
         log.error(err); // Usando o logger para registrar o erro
@@ -48,7 +53,7 @@ exports.getPatientsbyNutritionist = async (req, res) => {
             where: { idNutricionista: nutritionistId },
         });
 
-        if (!patients) {
+        if (!patients || patients.length < 1) {
             return res.status(404).json({ message: 'Nenhum paciente encontrado para este nutricionista.' });
         }
 
@@ -62,7 +67,7 @@ exports.getPatientsbyNutritionist = async (req, res) => {
 //update
 exports.updatePatient = async (req, res) => {
     const patientId = req.params.patientId;
-    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco } = req.body;
+    const { nomeCompleto, dtNascimento, numeroProntuario, sexo, telefone, email, diagnosticoOnco, alergias, comorbidades } = req.body;
 
     try {
         const patient = await Paciente.findByPk(patientId);
@@ -76,6 +81,8 @@ exports.updatePatient = async (req, res) => {
         patient.telefone = telefone;
         patient.email = email;
         patient.diagnosticoOnco = diagnosticoOnco;
+        patient.alergias = alergias;
+        patient.comorbidades = comorbidades;
 
         const updatedPatient = await patient.save();
         res.status(200).json(updatedPatient);

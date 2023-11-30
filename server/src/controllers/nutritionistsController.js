@@ -3,7 +3,7 @@ const Nutricionista = require('../models/nutritionist');
 
 //create
 exports.createNutritionist = async (req, res) => {
-    const { idNutricionista, crnSigla, crnNumero, nomeCompleto, telefone, email } = req.body;
+    const { idNutricionista, crnSigla, crnNumero, nomeCompleto, telefone, email, sexo, dtNascimento } = req.body;
 
     try {
         const nutritionist = await Nutricionista.create({
@@ -12,6 +12,8 @@ exports.createNutritionist = async (req, res) => {
             crnNumero: crnNumero,
             nomeCompleto: nomeCompleto,
             telefone: telefone,
+            sexo: sexo,
+            dtNascimento: dtNascimento,
             email: email
         });
         res.status(201).json(nutritionist);

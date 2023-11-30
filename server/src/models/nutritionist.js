@@ -21,9 +21,18 @@ const Nutricionista = db.define('Nutricionista', {
     },
     telefone: {
         type: Sequelize.STRING,
+        allowNull: false,
     },
     email: {
         type: Sequelize.STRING,
+    },
+    dtNascimento: {
+        type: Sequelize.DATE,
+        allowNull: false,
+    },
+    sexo: {
+        type: Sequelize.ENUM('M', 'F', 'Outros', 'Não Declarar'),
+        allowNull: false,
     },
 },  {
         indexes: [

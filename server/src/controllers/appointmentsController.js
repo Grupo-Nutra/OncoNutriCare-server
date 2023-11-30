@@ -3,7 +3,7 @@ const log = require('../util/logger');
 
 //create
 exports.createAppointment = async (req, res) => {
-    const { idPaciente, data, peso, gordura, hemoglobina, leucocitos, plaquetas, nauseas, vomitos, mucosite, diarreia, constipacao, alteracaoPaladar, adesaoTno, aceitacaoAlimentar, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, tratamento } = req.body;
+    const { idPaciente, data, peso, gordura, hemoglobina, leucocitos, plaquetas, nivelRisco, nauseas, vomitos, mucosite, diarreia, constipacao, alteracaoPaladar, adesaoTno, aceitacaoAlimentar, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, conduta } = req.body;
 
     try {
         const appointment = await Consulta.create({
@@ -25,9 +25,10 @@ exports.createAppointment = async (req, res) => {
             diagnosticoNutri: diagnosticoNutri,
             inapetencia: inapetencia,
             riscoNutricional: riscoNutricional,
+            nivelRisco: nivelRisco,
             statusTno: statusTno,
             planoTerapeutico: planoTerapeutico,
-            tratamento: tratamento
+            conduta: conduta
         });
         res.status(201).json(appointment);
     } catch (err) {
@@ -75,7 +76,7 @@ exports.getAppointmentsByPatient = async (req, res) => {
 //update
 exports.updateAppointment = async (req, res) => {
     const idConsulta = req.params.idConsulta;
-    const { data, peso, gordura, hemoglobina, leucocitos, plaquetas, nauseas, vomitos, mucosite, diarreia, constipacao, alteracaoPaladar, adesaoTno, aceitacaoAlimentar, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, tratamento } = req.body;
+    const { data, peso, gordura, hemoglobina, leucocitos, plaquetas, nauseas, vomitos, mucosite, diarreia, constipacao, alteracaoPaladar, adesaoTno, aceitacaoAlimentar, diagnosticoNutri, inapetencia, riscoNutricional, statusTno, planoTerapeutico, nivelRisco, conduta } = req.body;
 
     try {
         const appointment = await Consulta.findByPk(idConsulta);
@@ -83,7 +84,6 @@ exports.updateAppointment = async (req, res) => {
             return res.status(404).json({ message: 'Consulta não encontrada.' });
         }
         appointment.data = data;
-        appointment.hora = hora;
         appointment.peso = peso;
         appointment.gordura = gordura;
         appointment.hemoglobina = hemoglobina;
@@ -102,7 +102,8 @@ exports.updateAppointment = async (req, res) => {
         appointment.riscoNutricional = riscoNutricional;
         appointment.statusTno = statusTno;
         appointment.planoTerapeutico = planoTerapeutico;
-        appointment.tratamento = tratamento;
+        appointment.nivelRisco = nivelRisco;
+        appointment.conduta = conduta;
 
         const updatedAppointment = await appointment.save();
         res.status(200).json(updatedAppointment);

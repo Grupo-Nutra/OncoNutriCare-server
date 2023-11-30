@@ -6,6 +6,7 @@ const db = require('./util/db');
 const patientRoutes = require('./routes/patients');
 const nutritionistRoutes = require('./routes/nutritionists');
 const appointmentRoutes = require('./routes/appointments');
+const treatmentRoutes = require('./routes/treatments');
 
 require('dotenv').config();
 
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(patientRoutes);
 app.use(nutritionistRoutes);
 app.use(appointmentRoutes);
+app.use(treatmentRoutes);
 
 // sync database and start server
 db.sync()

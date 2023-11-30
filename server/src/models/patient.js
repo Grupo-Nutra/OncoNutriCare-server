@@ -11,7 +11,6 @@ const Paciente = db.define('Paciente', {
     },
     nomeCompleto: {
         type: Sequelize.STRING,
-        allowNull: false,
     },
     dtNascimento: {
         type: Sequelize.DATE,
@@ -21,11 +20,12 @@ const Paciente = db.define('Paciente', {
         type: Sequelize.STRING,
     },
     sexo: {
-        type: Sequelize.ENUM('M', 'F'),
+        type: Sequelize.ENUM('M', 'F', 'Outros', 'Não Declarar'),
         allowNull: false,
     },
     telefone: {
         type: Sequelize.STRING,
+        allowNull: false,
     },
     email: {
         type: Sequelize.STRING,
@@ -33,6 +33,12 @@ const Paciente = db.define('Paciente', {
     diagnosticoOnco: {
         type: Sequelize.STRING,
         allowNull: false,
+    },
+    comorbidades: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+    }, 
+    alergias: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
     },
 });
 
